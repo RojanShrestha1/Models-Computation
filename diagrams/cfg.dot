@@ -1,0 +1,18 @@
+digraph CFG {
+  node [shape=box];
+  start [shape=point];
+  accept [shape=doublecircle, label="parse accept"];
+  reject [shape=circle, color=red, label="syntax reject"];
+  start -> CONFIG;
+  CONFIG -> SERVER_BLOCK;
+  CONFIG -> SERVER_LIST;
+  SERVER_BLOCK -> SERVER_ITEMS [label="server { ... }"];
+  SERVER_ITEMS -> LISTEN_STMT;
+  SERVER_ITEMS -> ACCESS_STMT;
+  SERVER_ITEMS -> LOCATION_BLOCK;
+  LOCATION_BLOCK -> LOCATION_ITEMS [label="location PATH { ... }"];
+  LOCATION_ITEMS -> ACCESS_STMT;
+  LOCATION_ITEMS -> LOCATION_BLOCK;
+  SERVER_LIST -> accept;
+  CONFIG -> reject [label="unexpected token"];
+}

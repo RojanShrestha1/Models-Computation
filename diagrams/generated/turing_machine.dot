@@ -1,0 +1,20 @@
+digraph TM {
+  rankdir=LR;
+  node [shape=circle];
+  start [shape=point];
+  q_accept [shape=doublecircle];
+  q_reject [shape=circle, color=red];
+  start -> q_start;
+  q_start -> q_scan [label="read/write, R"];
+  q_scan -> q_rewind [label="normalized symbols"];
+  q_rewind -> q_syntax [label="_,_,L"];
+  q_syntax -> q_check_context;
+  q_check_context -> q_check_ports;
+  q_check_ports -> q_check_ipv4;
+  q_check_ipv4 -> q_check_rules;
+  q_check_rules -> q_accept [label="all checks pass"];
+  q_syntax -> q_reject [label="syntax error"];
+  q_check_ports -> q_reject [label="invalid port"];
+  q_check_ipv4 -> q_reject [label="invalid IPv4"];
+  q_check_rules -> q_reject [label="duplicate/unreachable"];
+}

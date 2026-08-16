@@ -1,0 +1,15 @@
+digraph PDA {
+  rankdir=LR;
+  node [shape=circle];
+  start [shape=point];
+  q_accept [shape=doublecircle];
+  q_reject [shape=circle, color=red];
+  start -> q0;
+  q0 -> q_read [label="push $"];
+  q_read -> q_read [label="server { / push SERVER"];
+  q_read -> q_read [label="location PATH { / push LOCATION"];
+  q_read -> q_read [label="} / pop SERVER or LOCATION"];
+  q_read -> q_accept [label="EOF and stack=$"];
+  q_read -> q_reject [label="} with stack=$"];
+  q_read -> q_reject [label="EOF with unclosed block"];
+}
